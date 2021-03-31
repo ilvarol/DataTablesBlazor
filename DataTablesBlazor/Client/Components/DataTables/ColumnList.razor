@@ -1,0 +1,50 @@
+﻿@typeparam Type
+@foreach (var item in List)
+{
+    <Column @bind-Name="item.Name" @bind-Class="item.Class" @bind-IsCurrent="item.IsCurrent" OnClick="OnClick"></Column>
+}
+
+@code {
+
+    [CascadingParameter]
+    private Table<Type> Parent { get; set; }
+
+    [Parameter]
+    public DataTablesRequest DataTablesRequest { get; set; }
+
+    [Parameter]
+    public IList<Column> List { get; set; }
+
+
+    [Parameter]
+    public EventCallback<DataTablesRequest> DataTablesRequestChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<IList<Column>> ListChanged { get; set; }
+
+
+    public void OnClick(Column column)
+    {
+        foreach (var item in List)
+        {
+            item.IsCurrent = item.Name == column.Name;
+
+            item.SetOrderDirectionClass();
+        }
+
+        column = List.First(f => f.IsCurrent);
+
+        DataTablesRequest.OrderColumn = column.Name;
+        DataTablesRequest.OrderDirection = column.Class.Contains("desc") ? "desc" : "asc";
+
+        Parent.RefreshData();
+    }
+
+    public void Add(Column column)
+    {
+        column.SetOrderDirectionClass();
+
+        List.Add(column);
+    }
+
+}

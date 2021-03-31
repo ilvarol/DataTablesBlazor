@@ -1,0 +1,29 @@
+﻿@inherits ItemComponent<PaginateButton>
+
+<a @attributes="InputAttributes" class="@Class" @onclick="(()=>OnClick.InvokeAsync(this))">@Number</a>
+
+@code {
+
+    private readonly string _paginate_button = "paginate_button";
+    private readonly string _current = "current";
+
+    [Parameter]
+    public int Number { get; set; }
+
+    [Parameter]
+    public EventCallback<int> NumberChanged { get; set; }
+
+    public void SetCurrentClass()
+    {
+        Class = IsCurrent ? $"{_paginate_button} {_current}" : _paginate_button;
+    }
+
+    private Dictionary<string, object> InputAttributes { get; set; } = new Dictionary<string, object>()
+    {
+        { "aria-controls", "example" },
+        { "data-dt-idx", "2" },
+        { "tabindex", "0" },
+    };
+}
+
+

@@ -1,0 +1,26 @@
+﻿@page "/"
+
+<Table Type="Mock" RequestUri="Mock" ColumnList="ColumnList" SearchColumn="Name">
+    <Body Context="item">
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.Surname</td>
+            <td>@item.Email</td>
+            <td>@item.Gender</td>
+        </tr>
+    </Body>
+</Table>
+
+@code{
+
+    List<Column> ColumnList = new List<Column>()
+    {
+        new Column() { Name= "Id", IsCurrent = true},
+        new Column() { Name= "Name"},
+        new Column() { Name= "Surname"},
+        new Column() { Name= "Email"},
+        new Column() { Name= "Gender"}
+    };
+
+}

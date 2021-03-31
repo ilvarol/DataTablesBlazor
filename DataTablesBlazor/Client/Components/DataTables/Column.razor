@@ -1,0 +1,32 @@
+﻿@inherits ItemComponent<Column>
+
+<th @attributes="InputAttributes" class="@Class" @onclick="(()=>OnClick.InvokeAsync(this))">@Name</th>
+
+@code{
+
+    private readonly string _sorting = "sorting";
+    private readonly string _sorting_asc = "sorting_asc";
+    private readonly string _sorting_desc = "sorting_desc";
+
+
+    public void SetOrderDirectionClass()
+    {
+        if (IsCurrent)
+            if (String.IsNullOrEmpty(Class))
+                Class = _sorting_asc;
+            else
+                Class = Class.Contains(_sorting_asc) ? _sorting_desc :
+                        Class.Contains(_sorting_desc) ? _sorting_asc : _sorting_asc;
+        else
+            Class = _sorting;
+    }
+
+
+    private Dictionary<string, object> InputAttributes { get; set; } = new Dictionary<string, object>()
+    {
+        { "tabindex", "0" },
+        { "rowspan", "1" },
+        { "colspan", "1" },
+        { "style", "width: 14px;"}
+    };
+}

@@ -1,0 +1,12 @@
+C:\Users\ilyas.varol\source\repos\DataTablesBlazor\DataTablesBlazor\Shared\bin\Debug\net5.0\DataTablesBlazor.Shared.deps.json
+C:\Users\ilyas.varol\source\repos\DataTablesBlazor\DataTablesBlazor\Shared\bin\Debug\net5.0\DataTablesBlazor.Shared.dll
+C:\Users\ilyas.varol\source\repos\DataTablesBlazor\DataTablesBlazor\Shared\bin\Debug\net5.0\ref\DataTablesBlazor.Shared.dll
+C:\Users\ilyas.varol\source\repos\DataTablesBlazor\DataTablesBlazor\Shared\bin\Debug\net5.0\DataTablesBlazor.Shared.pdb
+C:\Users\ilyas.varol\source\repos\DataTablesBlazor\DataTablesBlazor\Shared\obj\Debug\net5.0\DataTablesBlazor.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ilyas.varol\source\repos\DataTablesBlazor\DataTablesBlazor\Shared\obj\Debug\net5.0\DataTablesBlazor.Shared.AssemblyInfoInputs.cache
+C:\Users\ilyas.varol\source\repos\DataTablesBlazor\DataTablesBlazor\Shared\obj\Debug\net5.0\DataTablesBlazor.Shared.AssemblyInfo.cs
+C:\Users\ilyas.varol\source\repos\DataTablesBlazor\DataTablesBlazor\Shared\obj\Debug\net5.0\DataTablesBlazor.Shared.csproj.CoreCompileInputs.cache
+C:\Users\ilyas.varol\source\repos\DataTablesBlazor\DataTablesBlazor\Shared\obj\Debug\net5.0\DataTablesBlazor.Shared.dll
+C:\Users\ilyas.varol\source\repos\DataTablesBlazor\DataTablesBlazor\Shared\obj\Debug\net5.0\ref\DataTablesBlazor.Shared.dll
+C:\Users\ilyas.varol\source\repos\DataTablesBlazor\DataTablesBlazor\Shared\obj\Debug\net5.0\DataTablesBlazor.Shared.pdb
+C:\Users\ilyas.varol\source\repos\DataTablesBlazor\DataTablesBlazor\Shared\obj\Debug\net5.0\DataTablesBlazor.Shared.csprojAssemblyReference.cache

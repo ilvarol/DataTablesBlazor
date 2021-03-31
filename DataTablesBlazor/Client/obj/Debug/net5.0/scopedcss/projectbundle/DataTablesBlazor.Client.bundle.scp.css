@@ -1,0 +1,24 @@
+@import '';
+
+/* /Shared/MainLayout.razor.rz.scp.css */
+.page[b-4kjzdz67pj] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.main[b-4kjzdz67pj] {
+    flex: 1;
+}
+
+
+@media (min-width: 641px) {
+    .page[b-4kjzdz67pj] {
+        flex-direction: row;
+    }
+
+    .main > div[b-4kjzdz67pj] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}

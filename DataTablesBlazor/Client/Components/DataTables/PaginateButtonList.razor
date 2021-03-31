@@ -1,0 +1,178 @@
+﻿@typeparam Type
+
+<div class="dataTables_info" id="example_info" role="status" aria-live="polite">
+    Showing @From to @To of @DataTablesResponse.RecordsFiltered entries
+</div>
+<div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
+    <a class="paginate_button previous @_disabledPrevious" @onclick="PreviousClick" aria-controls="example" data-dt-idx="0" tabindex="-1" id="example_previous">Previous</a>
+    <span>
+
+        @if (List != null)
+        {
+            foreach (var item in List)
+            {
+                var index = List.IndexOf(item);
+
+                if (index > 0 && index <= List.Count - 1)
+                {
+                    var precedingItem = List[index - 1];
+
+                    if (item.Number - 1 != precedingItem.Number)
+                    {
+                        <span class="ellipsis">…</span>
+                    }
+                }
+
+                <PaginateButton @bind-Number="item.Number" @bind-Class="item.Class" @bind-IsCurrent="item.IsCurrent" OnClick="OnClick"></PaginateButton>
+            }
+        }
+
+    </span>
+    <a class="paginate_button next @_disabledNext" @onclick="NextClick" aria-controls="example" data-dt-idx="7" tabindex="0" id="example_next">Next</a>
+</div>
+
+@code {
+
+    private string _disabledNext = "", _disabledPrevious = "";
+    private int _maxnumber;
+
+    private IList<PaginateButton> List { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        DataTablesRequest.CurrentNumber = 1;
+
+        RefreshList(true);
+
+        return base.OnInitializedAsync();
+    }
+
+    [CascadingParameter]
+    private Table<Type> Parent { get; set; }
+
+    [Parameter]
+    public DataTablesRequest DataTablesRequest { get; set; }
+
+    [Parameter]
+    public DataTablesResponse<Type> DataTablesResponse { get; set; }
+
+
+    [Parameter]
+    public EventCallback<DataTablesRequest> DataTablesRequestChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<DataTablesResponse<Type>> DataTablesResponseChanged { get; set; }
+
+
+    private int From
+    {
+        get
+        {
+            return DataTablesRequest.CurrentNumber * DataTablesRequest.Length - DataTablesRequest.Length + 1;
+        }
+    }
+
+    private int To
+    {
+        get
+        {
+            return DataTablesRequest.CurrentNumber * DataTablesRequest.Length;
+        }
+    }
+
+
+    public void OnClick(PaginateButton ClickedButton)
+    {
+        DataTablesRequest.CurrentNumber = ClickedButton.Number;
+
+        RefreshList(true);
+    }
+
+    public void PreviousClick()
+    {
+        if (DataTablesRequest.CurrentNumber > 1)
+            DataTablesRequest.CurrentNumber -= 1;
+
+        RefreshList(true);
+    }
+
+    public void NextClick()
+    {
+        if (DataTablesRequest.CurrentNumber < _maxnumber)
+            DataTablesRequest.CurrentNumber += 1;
+
+        RefreshList(true);
+    }
+
+
+    public void RefreshList(bool refresh = false)
+    {
+        int pageCount = (int)Math.Ceiling((double)DataTablesResponse.RecordsFiltered / (double)DataTablesRequest.Length);
+
+        _maxnumber = pageCount;
+
+        List = new List<PaginateButton>();
+
+        List.Add(new PaginateButton() { Number = 1 });
+
+        var startingIndex = 2;
+
+        if (pageCount >= 2)
+        {
+            if (DataTablesRequest.CurrentNumber - 1 <= 3)
+            {
+                List.Add(new PaginateButton() { Number = 2 });
+
+                startingIndex = 3;
+            }
+            else
+            {
+                startingIndex = DataTablesRequest.CurrentNumber - 1;
+            }
+
+            int i = 0;
+
+            if (pageCount > 5 && pageCount - DataTablesRequest.CurrentNumber <= 3)
+            {
+                i -= 3;
+                startingIndex = pageCount - 4;
+            }
+
+            for (; startingIndex < pageCount; startingIndex++)
+            {
+                List.Add(new PaginateButton() { Number = startingIndex });
+
+                if (++i == 3) break;
+            }
+
+            if (pageCount > 2)
+                List.Add(new PaginateButton() { Number = pageCount });
+        }
+
+        List = List.OrderBy(o => o.Number).ToList();
+
+        if (DataTablesRequest.CurrentNumber == pageCount) _disabledNext = "disabled"; else _disabledNext = "";
+        if (DataTablesRequest.CurrentNumber == 1) _disabledPrevious = "disabled"; else _disabledPrevious = "";
+
+        foreach (var item in List)
+        {
+            item.IsCurrent = item.Number == DataTablesRequest.CurrentNumber;
+            item.SetCurrentClass();
+        }
+
+        if (refresh)
+        {
+            DataTablesRequest.Start = From - 1;
+
+            Parent.RefreshData();
+        }
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        RefreshList();
+
+        return base.OnParametersSetAsync();
+    }
+
+}

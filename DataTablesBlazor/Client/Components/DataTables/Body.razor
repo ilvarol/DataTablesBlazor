@@ -1,0 +1,37 @@
+﻿@*@inherits ListComponent<Head>*@
+
+    <CascadingValue Value=@this>
+        @ChildContent
+    </CascadingValue>
+
+    @code {
+
+        [Parameter]
+        public RenderFragment ChildContent { get; set; }
+
+        List<Column> ColumnList = new List<Column>();
+
+        internal void Add(Column column)
+        {
+            ColumnList.Add(column);
+            StateHasChanged();
+        }
+
+        //public override void OnClick(Title title)
+        //{
+        //    foreach (var item in List)
+        //    {
+        //        item.IsCurrent = item.Name == title.Name;
+        //        item.SetOrderDirectionClass();
+        //    }
+        //}
+
+        //After parameters are set, this method run
+        //protected override async Task OnParametersSetAsync()
+        //{
+        //    foreach (var item in List)
+        //    {
+        //        item.SetOrderDirectionClass();
+        //    }
+        //}
+    }
